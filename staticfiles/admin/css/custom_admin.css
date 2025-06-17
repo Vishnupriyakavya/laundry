@@ -1,0 +1,132 @@
+/* Custom Admin Styles */
+
+/* List View Enhancements */
+#changelist table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#changelist table thead th {
+    background: #2c3e50;
+    color: white;
+    font-weight: 600;
+    padding: 12px 8px;
+}
+
+#changelist table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Form Enhancements */
+.form-row {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-row:hover {
+    background-color: #f8f9fa;
+}
+
+/* Fieldset Styling */
+.module {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.module h2 {
+    background: #2c3e50;
+    color: white;
+    padding: 12px;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Button Styling */
+.button, input[type=submit], input[type=button], .submit-row input {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #2980b9;
+}
+
+/* Image Preview */
+.image-preview {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.image-preview:hover {
+    transform: scale(1.05);
+}
+
+/* Status Indicators */
+.status-active {
+    color: #27ae60;
+    font-weight: 600;
+}
+
+.status-inactive {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+/* Search and Filter Enhancements */
+#changelist-filter {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+#changelist-filter h2 {
+    background: #2c3e50;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+/* Pagination Styling */
+.paginator {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.paginator a {
+    color: #3498db;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.paginator a:hover {
+    background: #3498db;
+    color: white;
+}
+
+/* Action Buttons */
+.action-counter {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    #changelist table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .form-row {
+        padding: 8px;
+    }
+} 

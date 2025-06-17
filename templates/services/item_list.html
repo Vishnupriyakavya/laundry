@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Items - LaundryPro{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h1 class="display-4 fw-bold">Browse Items</h1>
+            <p class="lead text-muted">Select items and services for your laundry order</p>
+        </div>
+    </div>
+    
+    <!-- Filters and Search -->
+    <div class="row mb-4 justify-content-center" data-aos="fade-up">
+        <div class="col-lg-10 col-md-12">
+            <div class="card shadow-sm border-0 rounded-lg">
+                <div class="card-body py-3">
+                    <form method="get" class="row g-3 align-items-center">
+                        <div class="col-md-5">
+                            <label for="search_query" class="visually-hidden">Search Items</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" name="q" id="search_query" class="form-control" 
+                                       placeholder="Search items..." value="{{ request.GET.q|default:'' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="item_type" class="visually-hidden mb-2">Item Type</label>
+                            <select name="item_type" id="item_type" class="form-select">
+                                <option value="">All Types</option>
+                                {% for value, label in item_types %}
+                                    <option value="{{ value }}" {% if selected_item_type == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="service_type" class="visually-hidden mb-2">Service Type</label>
+                            <select name="service_type" id="service_type" class="form-select">
+                                <option value="">All Services</option>
+                                {% for value, label in service_types %}
+                                    <option value="{{ value }}" {% if selected_service_type == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-1 d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                        {% if request.GET.q or selected_item_type or selected_service_type %}
+                        <div class="col-12 text-end mt-2">
+                            <a href="{% url 'services:item_list' %}" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-times me-1"></i>Clear Filters
+                            </a>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Items Grid -->
+    <div class="row g-4">
+        {% for item in items %}
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{% widthratio forloop.counter 1 100 %}">
+            <div class="card service-card h-100 shadow-sm rounded-lg border-0">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-tshirt fa-3x text-muted"></i>
+                    </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-primary fw-bold">{{ item.name }}</h5>
+                    <p class="text-muted mb-2 small">{{ item.get_item_type_display }}</p>
+                    <p class="card-text flex-grow-1">{{ item.description|default:"Professional care for this item." }}</p>
+                    
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'cart:add_to_cart' %}" class="mt-auto pt-3 border-top">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                            <div class="mb-3">
+                                <label for="service_{{ item.id }}" class="form-label fw-bold small">Select Service:</label>
+                                <select name="service_id" id="service_{{ item.id }}" class="form-select form-select-sm" required>
+                                    <option value="">Choose a service...</option>
+                                    {% for service in services %}
+                                        <option value="{{ service.id }}" data-price="{{ service.price }}">
+                                            {{ service.name }} - Rs {{ service.price }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantity_{{ item.id }}" class="form-label fw-bold small">Quantity:</label>
+                                <input type="number" name="quantity" id="quantity_{{ item.id }}" 
+                                       class="form-control form-control-sm" value="1" min="1" max="10" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-sm mt-2">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
+                        </form>
+                    {% else %}
+                        <div class="text-center mt-auto pt-3 border-top">
+                            <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login to Order
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center" data-aos="fade-up">
+            <div class="alert alert-info py-4 rounded-lg shadow-sm border-0">
+                <i class="fas fa-info-circle fa-2x text-primary mb-3"></i>
+                <h4 class="alert-heading">No items found!</h4>
+                <p class="mb-0">We couldn't find any items matching your criteria. Try adjusting your filters or search query.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
