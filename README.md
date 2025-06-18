@@ -188,29 +188,9 @@ DATABASES = {
 4. Configure media file storage
 5. Set up HTTPS
 
-### Recommended Hosting
-- **Heroku**: Easy deployment with PostgreSQL
-- **PythonAnywhere**: Django-friendly hosting
-- **DigitalOcean**: VPS with full control
-- **AWS**: Scalable cloud hosting
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact: info@laundrypro.com
 
 ## 🔄 Version History
 
@@ -222,5 +202,3 @@ For support and questions:
 - Admin panel for order management
 
 ---
-
-**Built with ❤️ using Django** 
